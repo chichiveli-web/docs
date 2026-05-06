@@ -46,7 +46,7 @@
     document.getElementById('renewForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const data = Object.fromEntries(new FormData(e.target));
-      const response = await fetch('YOUR_N8N_WEBHOOK_URL', {
+      const response = await fetch('http://localhost:5678/webhook-test/renew', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
