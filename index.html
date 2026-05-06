@@ -52,7 +52,7 @@
 
     const data = Object.fromEntries(new FormData(e.target));
 
-    const response = await fetch('http://localhost:5678/webhook/renew', {
+    const response = await fetch('http://http://localhost:5678/webhook/renew', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
