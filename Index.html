@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Renew Gym Subscription</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f9f9f9; }
+    .container {
+      max-width: 600px; margin: 0 auto; background: white; padding: 25px; border-radius: 8px;
+    }
+    input, button { width: 100%; margin-bottom: 15px; padding: 8px; }
+    button {
+      background: #d32f2f; color: white; border: 0; font-weight: bold; cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Renew Your Gym Subscription</h2>
+    <p>Please confirm your details and renew your plan.</p>
+
+    <form id="renewForm">
+      <input type="hidden" id="memberId" name="member_id" value="">
+      <input type="hidden" id="email" name="email" value="">
+
+      <label>Name</label>
+      <input type="text" id="name" name="full_name" required>
+
+      <label>Plan (e.g., Basic, Premium)</label>
+      <input type="text" id="plan" name="plan" required>
+
+      <label>Renewal duration (months)</label>
+      <input type="number" id="duration" name="months" min="1" value="1" required>
+
+      <button type="submit">Submit Renewal</button>
+    </form>
+
+    <p id="status"></p>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    document.getElementById('memberId').value = params.get('member') || '';
+    document.getElementById('email').value = params.get('email') || '';
+
+    document.getElementById('renewForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(e.target));
+      const response = await fetch('YOUR_N8N_WEBHOOK_URL', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const status = document.getElementById('status');
+      if (response.ok) {
+        status.innerText = '✅ Renewal submitted successfully!';
+        status.style.color = 'green';
+      } else {
+        status.innerText = '❌ Something went wrong. Please try again.';
+        status.style.color = 'red';
+      }
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>
